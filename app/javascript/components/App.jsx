@@ -1,4 +1,13 @@
 import React from 'react';
-import Routes from '../routes';
+import ServerMetrics from './ServerMetrics';
 
-export default (props) => <>{Routes}</>;
+const App = () => (
+  <main className='vw-100 vh-100'>
+    <div className='container secondary-color'>
+      <h1 className='display-4'>API Monitor</h1>
+      <ServerMetrics />
+    </div>
+  </main>
+);
+
+export default App;
