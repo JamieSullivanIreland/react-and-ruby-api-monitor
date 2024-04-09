@@ -15,9 +15,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_07_140003) do
   enable_extension "plpgsql"
 
   create_table "server_metrics", force: :cascade do |t|
-    t.float "cpuTemp", null: false
-    t.float "cpuLoad", null: false
-    t.float "diskLoad", null: false
+    t.float "cpu_temp", null: false
+    t.float "cpu_load", null: false
+    t.float "disk_load", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

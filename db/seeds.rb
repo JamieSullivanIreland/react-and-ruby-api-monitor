@@ -1,8 +1,8 @@
 
-100.times do |i|
+10.times do |i|
     ServerMetric.create(
-      cpuTemp: Random.rand(150),
-      cpuLoad: Random.rand(100), 
-      diskLoad: Random.rand(100) 
+      cpu_temp: Random.rand(200),
+      cpu_load: Random.rand(100), 
+      disk_load: Random.rand(100) 
     )
   end

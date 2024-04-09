@@ -1,5 +1,5 @@
 import React from 'react';
-import ServerMetrics from './ServerMetrics';
+import ServerMetrics from './metrics/ServerMetrics';
 
 const App = () => (
   <main className='vw-100 vh-100'>
