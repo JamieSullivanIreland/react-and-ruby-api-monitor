@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'server_metrics/index'
+      get 'server_metrics/average'
+      get 'server_metrics/last_week_avg'
       post 'server_metrics/create'
       get '/show/:id', to: 'server_metrics#show'
       delete '/destroy/:id', to: 'server_metrics#destroy'
