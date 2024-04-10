@@ -1,13 +1,17 @@
-require 'date'
+require "date"
 
 class Api::V1::ServerMetricsController < ApplicationController
+  before_action :set_server_metric, only: %i[show destroy]
+  rescue_from ActionController::UnpermittedParameters, with: :handle_errors
+  rescue_from ActionController::ParameterMissing, with: :handle_errors
+
   def index
     page = params[:page] || 1
     limit = params[:limit] || 10
-    order_by = params[:order_by] || 'created_at'
-    sort_by = params[:sort_by] || 'desc'
-    serverMetrics = ServerMetric.order(order_by => sort_by).page(page).per(limit) 
-    render json: serverMetrics
+    order_by = params[:order_by] || "created_at"
+    sort_by = params[:sort_by] || "desc"
+    server_metrics = ServerMetric.order(order_by => sort_by).page(page).per(limit)
+    render json: server_metrics
   end
 
   def avg_per_hour
@@ -22,7 +26,7 @@ class Api::V1::ServerMetricsController < ApplicationController
 
     while start_time < limit
       end_time = start_time
-      
+
       # 10 minute intervals for last hour
       # 3 hour intervals otherwise
       if is_last_hour
@@ -36,9 +40,9 @@ class Api::V1::ServerMetricsController < ApplicationController
       end
 
       average_metric = AverageMetric.new(
-        label, 
-        server_metric.average(:cpu_temp) || 0, 
-        server_metric.average(:cpu_load) || 0, 
+        label,
+        server_metric.average(:cpu_temp) || 0,
+        server_metric.average(:cpu_load) || 0,
         server_metric.average(:disk_load) || 0
       )
       avg_arr.push(average_metric)
@@ -59,9 +63,9 @@ class Api::V1::ServerMetricsController < ApplicationController
       day_end = (now - count).in_time_zone(Time.zone).end_of_day
       server_metric = ServerMetric.where(:created_at => day_start..day_end)
       average_metric = AverageMetric.new(
-        day_start.strftime("%A")[0, 3], 
-        server_metric.average(:cpu_temp) || 0, 
-        server_metric.average(:cpu_load) || 0, 
+        day_start.strftime("%A")[0, 3],
+        server_metric.average(:cpu_temp) || 0,
+        server_metric.average(:cpu_load) || 0,
         server_metric.average(:disk_load) || 0
       )
       avg_arr.push(average_metric)
@@ -72,30 +76,32 @@ class Api::V1::ServerMetricsController < ApplicationController
   end
 
   def create
-    serverMetric = ServerMetric.create!(serverMetric_params)
-    if serverMetric
-      render json: serverMetric
-    else
-      render json: serverMetric.errors
+    server_metric = ServerMetric.create!(server_metric_params)
+    if server_metric
+      render json: server_metric, status: :created
     end
   end
 
   def show
-    render json: @serverMetric
+    render json: @server_metric
   end
 
   def destroy
-    @serverMetric&.destroy
-    render json: { message: 'Metric deleted!' }
+    @server_metric&.destroy
+    render json: { message: "Server metric deleted!" }, status: :ok
   end
 
   private
 
-  def serverMetric_params
-    params.permit(:cpuTemp, :cpuLoad, :diskLoad)
+  def handle_errors
+    render json: { message: "Something went wrong" }, status: :unprocessable_entity
   end
 
-  def set_serverMetric
-    @serverMetric = ServerMetric.find(params[:id])
+  def server_metric_params
+    params.require(:server_metric).permit(:cpu_temp, :cpu_load, :disk_load)
+  end
+
+  def set_server_metric
+    @server_metric = ServerMetric.find(params[:id])
   end
 end
