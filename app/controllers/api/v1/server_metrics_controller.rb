@@ -31,25 +31,25 @@ class Api::V1::ServerMetricsController < ApplicationController
     num_hours = params[:num_hours].to_i
     avg_arr = []
     now = DateTime.current.change(:usec => 0)
-    count = 1
+    count = 0
     start_time = 0
-    end_time = 0
+    end_time = ""
     is_last_hour = num_hours <= 1
     limit = is_last_hour ? 60 : num_hours
 
     while start_time < limit
-      end_time = start_time
-
       # 10 minute intervals for last hour
       # 3 hour intervals otherwise
       if is_last_hour
+        end_time = count == 0 ? now : start_time.minutes.ago
         start_time = count * 10
-        server_metric = ServerMetric.where(:created_at => start_time.minutes.ago..end_time.minutes.ago)
-        label = start_time.minutes.ago.strftime("%H:%M")
+        server_metric = ServerMetric.where(:created_at => start_time.minutes.ago..end_time)
+        label = end_time.strftime("%H:%M")
       else
+        end_time = count == 0 ? now : start_time.hours.ago
         start_time = count * 3
-        server_metric = ServerMetric.where(:created_at => start_time.hours.ago..end_time.hours.ago)
-        label = start_time.hours.ago.strftime("%H:%M")
+        server_metric = ServerMetric.where(:created_at => start_time.hours.ago..end_time)
+        label = end_time.strftime("%H:%M")
       end
 
       average_metric = AverageMetric.new(
