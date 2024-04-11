@@ -32,6 +32,9 @@ gem "jbuilder"
 # pagination
 gem "kaminari"
 
+#  Schema
+gem "dry-schema", "~> 1.13", ">= 1.13.3"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
@@ -65,4 +68,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-

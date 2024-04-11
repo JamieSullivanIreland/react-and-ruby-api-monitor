@@ -1,17 +1,30 @@
 require "date"
+require "dry-schema"
 
 class Api::V1::ServerMetricsController < ApplicationController
   before_action :set_server_metric, only: %i[show destroy]
-  rescue_from ActionController::UnpermittedParameters, with: :handle_errors
-  rescue_from ActionController::ParameterMissing, with: :handle_errors
 
   def index
-    page = params[:page] || 1
-    limit = params[:limit] || 10
-    order_by = params[:order_by] || "created_at"
-    sort_by = params[:sort_by] || "desc"
-    server_metrics = ServerMetric.order(order_by => sort_by).page(page).per(limit)
-    render json: server_metrics
+    schema = Dry::Schema.Params do
+      required(:page).filled(:integer)
+      required(:limit).filled(:integer, lteq?: 50)
+      optional(:order_by).filled(:string)
+      optional(:sort_by).filled(:string)
+    end
+
+    validation = schema.call(pagination_params.to_h)
+
+    if validation.success?
+      sort_by = params[:sort_by] || "desc"
+      order_by = params[:order_by] || "created_at"
+      server_metrics = ServerMetric
+        .order(order_by => sort_by)
+        .page(params[:page])
+        .per(params[:limit])
+      render json: server_metrics
+    else
+      handle_errors(validation.errors.to_h)
+    end
   end
 
   def avg_per_hour
@@ -76,9 +89,21 @@ class Api::V1::ServerMetricsController < ApplicationController
   end
 
   def create
-    server_metric = ServerMetric.create!(server_metric_params)
-    if server_metric
-      render json: server_metric, status: :created
+    schema = Dry::Schema.Params do
+      required(:cpu_temp).filled(type?: Float, lteq?: 200)
+      required(:cpu_load).filled(type?: Float, lteq?: 100)
+      required(:disk_load).filled(type?: Float, lteq?: 100)
+    end
+
+    validation = schema.call(server_metric_params.to_h)
+
+    if validation.success?
+      server_metric = ServerMetric.create!(server_metric_params.to_h)
+      if server_metric
+        render json: server_metric, status: :created
+      end
+    else
+      handle_errors(validation.errors.to_h)
     end
   end
 
@@ -93,12 +118,25 @@ class Api::V1::ServerMetricsController < ApplicationController
 
   private
 
-  def handle_errors
-    render json: { message: "Something went wrong" }, status: :unprocessable_entity
+  def handle_errors(errors = nil)
+    if errors
+      message = ""
+      errors.each do |key, value|
+        puts "#{key} #{value.first}"
+        message = "#{key} #{value.first}"
+      end
+      render json: { message: message }, status: :unprocessable_entity
+    else
+      render json: { message: "Something went wrong" }, status: :unprocessable_entity
+    end
   end
 
   def server_metric_params
     params.require(:server_metric).permit(:cpu_temp, :cpu_load, :disk_load)
+  end
+
+  def pagination_params
+    params.permit(:page, :limit, :order_by, :sort_by)
   end
 
   def set_server_metric
