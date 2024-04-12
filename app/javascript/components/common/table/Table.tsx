@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import TableRow from './TableRow';
 
-import type { ITableCell, ITableData, ITableRow } from '../../common/types';
+import type { ITableCell, ITableRow } from '../../../common/types';
 
 interface IProps {
   headerCells: ITableCell[];
@@ -11,16 +11,20 @@ interface IProps {
 
 const Table = ({ headerCells, rows }: IProps) => {
   return (
-    <table className='table'>
-      <thead>
-        <TableRow cells={headerCells} />
-      </thead>
-      <tbody>
-        {rows.map((row: ITableRow) => (
-          <TableRow cells={row.cells} />
-        ))}
-      </tbody>
-    </table>
+    <div className='border rounded'>
+      <table className='table table-striped table-border-radius'>
+        <thead>
+          <TableRow cells={headerCells} />
+        </thead>
+        <tbody>
+          {rows.map((row: ITableRow, i: number) => (
+            <Fragment key={i}>
+              <TableRow cells={row.cells} />
+            </Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div>
 
     // <table className='table'>
     //   <thead>

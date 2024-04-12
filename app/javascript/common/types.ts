@@ -1,22 +1,6 @@
-// export interface ITableHeader {
-//   key: string;
-//   classes?: string;
-//   sortable?: boolean;
-// }
-
-// export interface ITableColumn {
-//   headerKey: string;
-//   value: any;
-// }
-
-// export interface ITableData {
-//   headers: ITableHeader[];
-//   columns: ITableColumn[];
-// }
-
 export interface ITableCell {
   key: string;
-  value: any;
+  label: any;
   classes?: string;
 }
 

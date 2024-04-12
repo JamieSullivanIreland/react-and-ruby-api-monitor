@@ -6,11 +6,12 @@ import { Line } from 'react-chartjs-2';
 Chart.register(CategoryScale);
 
 interface IProps {
+  header: string;
   labels: string[];
   data: number[];
 }
 
-const LineChart = ({ labels, data }: IProps) => {
+const LineChart = ({ header, labels, data }: IProps) => {
   const [chartData, setChartData] = useState({
     labels: labels.map((label: string) => label),
     datasets: [
@@ -36,7 +37,7 @@ const LineChart = ({ labels, data }: IProps) => {
 
   return (
     <div className='chart-container line-chart'>
-      <h2 className='text-center text-dark'>API Monitor</h2>
+      <h3 className='text-center text-dark'>{header}</h3>
       <Line
         data={chartData}
         options={{

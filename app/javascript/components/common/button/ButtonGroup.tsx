@@ -3,11 +3,12 @@ import Button from './Button';
 
 interface IProps {
   label: string;
+  activeBtnLabel: string;
   btnLabels: string[];
   onClick: (e: Event) => void;
 }
 
-const ButtonGroup = ({ label, btnLabels, onClick }: IProps) => {
+const ButtonGroup = ({ label, activeBtnLabel, btnLabels, onClick }: IProps) => {
   return (
     <div
       className='btn-group'
@@ -19,7 +20,11 @@ const ButtonGroup = ({ label, btnLabels, onClick }: IProps) => {
           <Button
             label={label}
             onClick={onClick}
-            classes='btn btn-light border-secondary'
+            classes={`
+              btn 
+              border-secondary 
+              ${activeBtnLabel === label ? 'btn-secondary text-light' : 'btn-light'}
+            `}
           />
         </Fragment>
       ))}
