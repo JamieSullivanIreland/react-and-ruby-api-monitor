@@ -1,4 +1,15 @@
-export const API_METRICS_URL = '/api/v1/server_metrics';
+export const METRICS_URL = '/api/v1/server_metrics';
+export const AVG_PER_HOUR_URL = `${METRICS_URL}/avg_per_hour`;
+export const AVG_PER_DAY_URL = `${METRICS_URL}/avg_per_day`;
+
+export const METRICS_FILTERS = {
+  SEVEN_DAYS: '7 D',
+  THREE_DAYS: '3 D',
+  ONE_DAY: '1 D',
+  TWELVE_HOURS: '12 H',
+  SIX_HOURS: '6 H',
+  ONE_HOUR: '1 H',
+};
 
 export const Data = [
   {
@@ -33,6 +44,20 @@ export const Data = [
     id: 5,
     day: 'Fri',
     cpuTemp: 59,
+    cpuLoad: 120.55,
+    diskLoad: 123.33,
+  },
+  {
+    id: 6,
+    day: 'Sat',
+    cpuTemp: 36,
+    cpuLoad: 120.55,
+    diskLoad: 123.33,
+  },
+  {
+    id: 7,
+    day: 'Sun',
+    cpuTemp: 20,
     cpuLoad: 120.55,
     diskLoad: 123.33,
   },

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import { API_METRICS_URL } from '../../common/constants';
+import { METRICS_URL } from '../../common/constants';
 import Table from '../table/Table';
 
 import type { IServerMetric, ITableData, ITableRow } from '../../common/types';
@@ -34,7 +34,7 @@ const ServerMetrics = () => {
 
   useEffect(() => {
     axios
-      .get(`${API_METRICS_URL}/index`)
+      .get(`${METRICS_URL}/index`)
       .then((res) => {
         // console.log(res.data);
         if (res.data) {

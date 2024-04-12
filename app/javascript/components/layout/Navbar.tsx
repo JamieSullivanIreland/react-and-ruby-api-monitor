@@ -2,8 +2,8 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <nav className='navbar bg-primary-color'>
-      <div className='contain'>
+    <nav className='navbar bg-primary'>
+      <div className='container'>
         <a
           className='navbar-brand'
           href='#'

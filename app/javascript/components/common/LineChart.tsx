@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Chart from 'chart.js/auto';
 import { CategoryScale } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-import { Data } from '../../common/constants';
-
 Chart.register(CategoryScale);
 
-const LineChart = () => {
+interface IProps {
+  labels: string[];
+  data: number[];
+}
+
+const LineChart = ({ labels, data }: IProps) => {
   const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.day),
+    labels: labels.map((label: string) => label),
     datasets: [
       {
-        data: Data.map((data) => data.cpuTemp),
+        data: data.map((num: number) => num),
         backgroundColor: ['#2a71d0'],
         borderColor: 'black',
         borderWidth: 1,
-        maxWidth: 200,
       },
     ],
   });
 
+  useEffect(() => {
+    setChartData({
+      labels: labels.map((label: string) => label),
+      datasets: [
+        {
+          data: data.map((num: number) => num),
+        },
+      ],
+    });
+  }, [labels, data]);
+
   return (
     <div className='chart-container line-chart'>
-      <h2 className='text-primary-color fs-2'>API Monitor</h2>
+      <h2 className='text-center text-dark'>API Monitor</h2>
       <Line
         data={chartData}
         options={{

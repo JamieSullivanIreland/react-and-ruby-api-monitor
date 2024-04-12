@@ -7,7 +7,7 @@ import Navbar from './layout/Navbar';
 const App = () => (
   <main className='vw-100 vh-100'>
     <Navbar />
-    <div className='contain'>
+    <div className='container mt-5'>
       {/* <ServerMetrics /> */}
       {/* <LineChart /> */}
       <MetricsCharts />

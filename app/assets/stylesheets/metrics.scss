@@ -1,0 +1,19 @@
+@import 'variables';
+
+.metrics {
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+}
+
+.line-chart {
+  max-width: 400px;
+}

@@ -37,3 +37,10 @@ export interface IServerMetric {
   cpuLoad: number;
   diskLoad: number;
 }
+
+export interface IAverageMetric {
+  label: string;
+  cpu_temp_avg: number;
+  cpu_load_avg: number;
+  disk_load_avg: number;
+}

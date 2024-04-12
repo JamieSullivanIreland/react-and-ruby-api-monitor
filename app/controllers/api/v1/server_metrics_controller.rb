@@ -28,7 +28,7 @@ class Api::V1::ServerMetricsController < ApplicationController
   end
 
   def avg_per_hour
-    num_hours = params[:num_hours].to_i
+    num_hours = params[:num].to_i
     avg_arr = []
     now = DateTime.current.change(:usec => 0)
     count = 0
@@ -67,7 +67,7 @@ class Api::V1::ServerMetricsController < ApplicationController
 
   def avg_per_day
     count = 0
-    num_days = params[:num_days].to_i
+    num_days = params[:num].to_i
     avg_arr = []
     now = DateTime.current.change(:usec => 0)
 
