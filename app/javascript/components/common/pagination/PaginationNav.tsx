@@ -4,7 +4,6 @@ import { nanoid } from 'nanoid';
 import { useFirstRender } from '../../../hooks/useFirstRender';
 
 interface IProps {
-  pages: number[];
   totalPages: number;
   activePage: number;
   onClick: (page: number) => void;

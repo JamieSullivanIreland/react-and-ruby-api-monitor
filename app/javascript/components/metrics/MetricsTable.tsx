@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { METRICS_URL, METRICS_KEYS } from '../../common/constants';
+import { ORDER_BY, METRICS_URL, METRICS_KEYS } from '../../common/constants';
 import Table from '../common/table/Table';
 
 import { fetchData } from '../../common/api';
 
 import type {
   IPaginatedMetrics,
+  IPaginationParams,
   IServerMetric,
   ITableRow,
 } from '../../common/types';
@@ -14,11 +15,17 @@ import PaginationNav from '../common/pagination/PaginationNav';
 import DropdownButton from '../common/button/DropdownButton';
 
 const MetricsTable = () => {
-  const [tableRows, setTableRows] = useState<ITableRow[]>([]);
-  const [limit, setLimit] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number[]>([1]);
   const { ID, CREATED_AT, CPU_TEMP, CPU_LOAD, DISK_LOAD } = METRICS_KEYS;
+  const { ASC, DESC } = ORDER_BY;
+  const dropdownLabels = ['Show 10', 'Show 25', 'Show 50'];
+  const [tableRows, setTableRows] = useState<ITableRow[]>([]);
+  const [totalPages, setTotalPages] = useState<number[]>([1]);
+  const [paginationParams, setPaginationParams] = useState<IPaginationParams>({
+    page: 1,
+    limit: 10,
+    sortBy: ID,
+    orderBy: DESC,
+  });
 
   const getTableCells = (metric: IServerMetric) =>
     Object.entries(metric).map((data: Array<any>) => {
@@ -48,69 +55,104 @@ const MetricsTable = () => {
 
   useEffect(() => {
     fetchData(METRICS_URL, {
-      page,
-      limit,
+      page: paginationParams.page,
+      limit: paginationParams.limit,
+      sort_by: paginationParams.sortBy,
+      order_by: paginationParams.orderBy,
     })
       .then((data: IPaginatedMetrics) => {
         console.log(data);
-        const { totalItems, totalPages, results } = data;
+        const { totalPages, results } = data;
         setTotalPages(totalPages);
         setTableRows(getTableRows(results));
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [page, limit]);
+  }, [
+    paginationParams.page,
+    paginationParams.limit,
+    paginationParams.sortBy,
+    paginationParams.orderBy,
+  ]);
 
   const headers = [
     {
       key: ID,
       label: 'ID',
       classes: 'fw-semibold',
+      isSortable: true,
     },
     {
       key: CREATED_AT,
       label: 'Timestamp',
       classes: 'fw-semibold',
+      isSortable: true,
     },
     {
       key: CPU_TEMP,
       label: 'CPU Temp',
       classes: 'text-center fw-semibold',
+      isSortable: true,
     },
     {
       key: CPU_LOAD,
       label: 'CPU Load',
       classes: 'text-center fw-semibold',
+      isSortable: true,
     },
     {
       key: DISK_LOAD,
       label: 'Disk Load',
       classes: 'text-center fw-semibold',
+      isSortable: true,
     },
   ];
 
   const handlePageClick = (page: number) => {
-    setPage(page);
+    setPaginationParams({
+      ...paginationParams,
+      page,
+    });
   };
 
-  const t = [1, 2, 3];
+  const handleDropdownClick = (label: string) => {
+    const limit = label.split(' ')[1];
+    setPaginationParams({
+      ...paginationParams,
+      limit,
+    });
+  };
+
+  const handleSortByClick = (key: string) => {
+    let orderBy = ASC;
+    if (key === paginationParams.sortBy) {
+      orderBy = paginationParams.orderBy === DESC ? ASC : DESC;
+    }
+    setPaginationParams({
+      ...paginationParams,
+      sortBy: key,
+      orderBy: orderBy,
+    });
+  };
 
   return (
     <div className='mt-5'>
       <Table
+        paginationParams={paginationParams}
         headerCells={headers}
         rows={tableRows}
+        onSort={handleSortByClick}
       />
       <div className='pagination__container mt-5'>
         <DropdownButton
-          labels={['10', '25', '50']}
-          activeLabel={'Show 10'}
+          labels={dropdownLabels}
+          activeLabel={`Show ${paginationParams.limit}`}
+          onClick={handleDropdownClick}
         />
         <PaginationNav
-          pages={t}
           totalPages={totalPages}
-          activePage={page}
+          activePage={paginationParams.page}
           onClick={handlePageClick}
         />
       </div>

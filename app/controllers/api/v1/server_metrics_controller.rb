@@ -15,11 +15,11 @@ class Api::V1::ServerMetricsController < ApplicationController
     validation = schema.call(pagination_params.to_h)
 
     if validation.success?
-      sort_by = params[:sort_by] || "desc"
-      order_by = params[:order_by] || "created_at"
+      sort_by = params[:sort_by] || "created_at"
+      order_by = params[:order_by] || "desc"
       server_metrics = ServerMetric
         .select("id, created_at, cpu_temp, cpu_load, disk_load")
-        .order(order_by => sort_by)
+        .order(sort_by => order_by)
         .page(params[:page])
         .per(params[:limit])
       render json: {
