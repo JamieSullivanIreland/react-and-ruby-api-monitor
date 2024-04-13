@@ -94,8 +94,6 @@ const MetricsTable = () => {
     setPage(page);
   };
 
-  const t = [1, 2, 3];
-
   return (
     <div className='mt-5'>
       <Table
@@ -108,7 +106,6 @@ const MetricsTable = () => {
           activeLabel={'Show 10'}
         />
         <PaginationNav
-          pages={t}
           totalPages={totalPages}
           activePage={page}
           onClick={handlePageClick}
