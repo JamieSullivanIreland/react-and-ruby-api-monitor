@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { nanoid } from 'nanoid';
 
 import TableCell from './TableCell';
 
@@ -11,8 +12,8 @@ interface IProps {
 const TableRow = ({ cells }: IProps) => {
   return (
     <tr>
-      {cells.map((cell: ITableCell, i: number) => (
-        <Fragment key={i}>
+      {cells.map((cell: ITableCell) => (
+        <Fragment key={nanoid()}>
           <TableCell cell={cell} />
         </Fragment>
       ))}

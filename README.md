@@ -23,5 +23,7 @@ Things you may want to cover:
 
 - ...
 
+use kaminari for pagination
+
 Use tree shaking for Chart JS
 Write test cases

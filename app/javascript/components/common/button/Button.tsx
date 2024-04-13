@@ -3,16 +3,10 @@ import React from 'react';
 interface IProps {
   label: string;
   onClick: (e: Event) => void;
-  key?: number;
   classes?: string;
 }
 
-const Button = ({
-  label,
-  onClick,
-  key,
-  classes = 'btn btn-primary',
-}: IProps) => {
+const Button = ({ label, onClick, classes = 'btn btn-primary' }: IProps) => {
   return (
     <button
       type='button'

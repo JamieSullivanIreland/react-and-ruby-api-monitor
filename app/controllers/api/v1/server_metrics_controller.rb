@@ -22,7 +22,11 @@ class Api::V1::ServerMetricsController < ApplicationController
         .order(order_by => sort_by)
         .page(params[:page])
         .per(params[:limit])
-      render json: server_metrics
+      render json: {
+               totalItems: ServerMetric.count,
+               totalPages: (ServerMetric.count.to_f / params[:limit].to_f).ceil,
+               results: server_metrics,
+             }, status: :ok
     else
       handle_errors(validation.errors.to_h)
     end
@@ -63,7 +67,7 @@ class Api::V1::ServerMetricsController < ApplicationController
       avg_arr.push(average_metric)
     end
 
-    render json: avg_arr
+    render json: avg_arr.reverse()
   end
 
   def avg_per_day
@@ -86,7 +90,7 @@ class Api::V1::ServerMetricsController < ApplicationController
       count = count + 1
     end
 
-    render json: avg_arr
+    render json: avg_arr.reverse()
   end
 
   def create

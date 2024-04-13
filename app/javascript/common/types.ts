@@ -28,3 +28,9 @@ export interface IAverageMetric {
   cpu_load_avg: number;
   disk_load_avg: number;
 }
+
+export interface IPaginatedMetrics {
+  results: IServerMetric[];
+  totalItems: number;
+  totalPages: number;
+}

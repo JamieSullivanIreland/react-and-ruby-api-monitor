@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react';
+import { nanoid } from 'nanoid';
+
 import Button from './Button';
 
 interface IProps {
@@ -16,7 +18,7 @@ const ButtonGroup = ({ label, activeBtnLabel, btnLabels, onClick }: IProps) => {
       aria-label={label}
     >
       {btnLabels.map((label: string, i: number) => (
-        <Fragment key={i}>
+        <Fragment key={nanoid()}>
           <Button
             label={label}
             onClick={onClick}
