@@ -1,11 +1,16 @@
 import React from 'react';
-import ServerMetrics from './metrics/ServerMetrics';
+import MetricsTable from './metrics/MetricsTable';
+import LineChart from './common/chart/LineChart';
+import MetricsCharts from './metrics/MetricsCharts';
+import Navbar from './layout/Navbar';
 
 const App = () => (
   <main className='vw-100 vh-100'>
-    <div className='container secondary-color'>
-      <h1 className='display-4'>API Monitor</h1>
-      <ServerMetrics />
+    <Navbar />
+    <div className='container mt-5'>
+      {/* <LineChart /> */}
+      <MetricsCharts />
+      <MetricsTable />
     </div>
   </main>
 );

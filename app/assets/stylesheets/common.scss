@@ -1,0 +1,11 @@
+.table-border-radius {
+  border-radius: 0.375rem;
+  overflow: hidden;
+  margin-bottom: 0;
+
+  tbody tr {
+    &:last-child {
+      border-bottom: transparent;
+    }
+  }
+}

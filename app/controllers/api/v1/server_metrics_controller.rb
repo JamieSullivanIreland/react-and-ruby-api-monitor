@@ -18,17 +18,22 @@ class Api::V1::ServerMetricsController < ApplicationController
       sort_by = params[:sort_by] || "desc"
       order_by = params[:order_by] || "created_at"
       server_metrics = ServerMetric
+        .select("id, created_at, cpu_temp, cpu_load, disk_load")
         .order(order_by => sort_by)
         .page(params[:page])
         .per(params[:limit])
-      render json: server_metrics
+      render json: {
+               totalItems: ServerMetric.count,
+               totalPages: (ServerMetric.count.to_f / params[:limit].to_f).ceil,
+               results: server_metrics,
+             }, status: :ok
     else
       handle_errors(validation.errors.to_h)
     end
   end
 
   def avg_per_hour
-    num_hours = params[:num_hours].to_i
+    num_hours = params[:num].to_i
     avg_arr = []
     now = DateTime.current.change(:usec => 0)
     count = 0
@@ -38,16 +43,17 @@ class Api::V1::ServerMetricsController < ApplicationController
     limit = is_last_hour ? 60 : num_hours
 
     while start_time < limit
+      count = count + 1
       # 10 minute intervals for last hour
       # 3 hour intervals otherwise
       if is_last_hour
-        end_time = count == 0 ? now : start_time.minutes.ago
+        end_time = count == 1 ? now : start_time.minutes.ago
         start_time = count * 10
         server_metric = ServerMetric.where(:created_at => start_time.minutes.ago..end_time)
         label = end_time.strftime("%H:%M")
       else
-        end_time = count == 0 ? now : start_time.hours.ago
-        start_time = count * 3
+        end_time = count == 1 ? now : start_time.hours.ago
+        start_time = count * 4
         server_metric = ServerMetric.where(:created_at => start_time.hours.ago..end_time)
         label = end_time.strftime("%H:%M")
       end
@@ -59,15 +65,14 @@ class Api::V1::ServerMetricsController < ApplicationController
         server_metric.average(:disk_load) || 0
       )
       avg_arr.push(average_metric)
-      count = count + 1
     end
 
-    render json: avg_arr
+    render json: avg_arr.reverse()
   end
 
   def avg_per_day
     count = 0
-    num_days = params[:num_days].to_i
+    num_days = params[:num].to_i
     avg_arr = []
     now = DateTime.current.change(:usec => 0)
 
@@ -85,7 +90,7 @@ class Api::V1::ServerMetricsController < ApplicationController
       count = count + 1
     end
 
-    render json: avg_arr
+    render json: avg_arr.reverse()
   end
 
   def create
