@@ -3,18 +3,24 @@ import { nanoid } from 'nanoid';
 
 import TableCell from './TableCell';
 
-import type { ITableCell } from '../../../common/types';
+import type { ITableCell, IPaginationParams } from '../../../common/types';
 
 interface IProps {
   cells: ITableCell[];
+  paginationParams?: IPaginationParams;
+  onSort?: (key: string) => void;
 }
 
-const TableRow = ({ cells }: IProps) => {
+const TableRow = ({ cells, paginationParams, onSort }: IProps) => {
   return (
     <tr>
       {cells.map((cell: ITableCell) => (
         <Fragment key={nanoid()}>
-          <TableCell cell={cell} />
+          <TableCell
+            cell={cell}
+            paginationParams={paginationParams}
+            onSort={onSort}
+          />
         </Fragment>
       ))}
     </tr>

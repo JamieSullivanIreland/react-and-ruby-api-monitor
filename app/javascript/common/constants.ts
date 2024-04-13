@@ -18,3 +18,8 @@ export const METRICS_KEYS = {
   CPU_LOAD: 'cpu_load',
   DISK_LOAD: 'disk_load',
 };
+
+export const ORDER_BY = {
+  ASC: 'asc',
+  DESC: 'desc',
+};

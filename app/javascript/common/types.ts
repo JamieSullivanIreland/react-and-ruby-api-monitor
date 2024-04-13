@@ -2,6 +2,7 @@ export interface ITableCell {
   key: string;
   label: any;
   classes?: string;
+  isSortable?: boolean;
 }
 
 export interface ITableRow {
@@ -33,4 +34,11 @@ export interface IPaginatedMetrics {
   results: IServerMetric[];
   totalItems: number;
   totalPages: number;
+}
+
+export interface IPaginationParams {
+  page: number[];
+  limit: number;
+  sortBy?: string;
+  orderBy?: string;
 }
