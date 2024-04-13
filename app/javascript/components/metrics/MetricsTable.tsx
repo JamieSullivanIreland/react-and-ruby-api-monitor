@@ -94,6 +94,13 @@ const MetricsTable = () => {
     setPage(page);
   };
 
+  const handleDropdownClick = (label: string) => {
+    const limit = label.split(' ')[1];
+    setLimit(Number(limit));
+  };
+
+  const dropdownLabels = ['Show 10', 'Show 25', 'Show 50'];
+
   return (
     <div className='mt-5'>
       <Table
@@ -102,8 +109,9 @@ const MetricsTable = () => {
       />
       <div className='pagination__container mt-5'>
         <DropdownButton
-          labels={['10', '25', '50']}
-          activeLabel={'Show 10'}
+          labels={dropdownLabels}
+          activeLabel={`Show ${limit}`}
+          onClick={handleDropdownClick}
         />
         <PaginationNav
           totalPages={totalPages}

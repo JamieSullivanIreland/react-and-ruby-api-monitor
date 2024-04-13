@@ -4,9 +4,10 @@ import { nanoid } from 'nanoid';
 interface IProps {
   labels: string[];
   activeLabel: string;
+  onClick: (label: string) => void;
 }
 
-const DropdownButton = ({ labels, activeLabel }: IProps) => {
+const DropdownButton = ({ labels, activeLabel, onClick }: IProps) => {
   return (
     <div className='dropdown'>
       <button
@@ -21,7 +22,14 @@ const DropdownButton = ({ labels, activeLabel }: IProps) => {
       <ul className='dropdown-menu'>
         {labels.map((label: string) => (
           <li key={nanoid()}>
-            <a className='dropdown-item'>{label}</a>
+            <a
+              onClick={() => {
+                onClick(label);
+              }}
+              className='dropdown-item'
+            >
+              {label}
+            </a>
           </li>
         ))}
       </ul>
