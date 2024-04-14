@@ -1,8 +1,11 @@
-FactoryBot.define do
+FactoryBot.define do |i|
   factory :server_metric do
-    cpu_temp { 150 }
-    cpu_load { 60 }
-    disk_load { 35 }
+    id { i }
+    cpu_temp { Random.rand(200) }
+    cpu_load { Random.rand(100) }
+    disk_load { Random.rand(100) }
+    created_at { "2024-04-14T15:20:20.506Z" }
+    updated_at { "2024-04-14T15:20:20.506Z" }
   end
 
   # factory :average_metric do

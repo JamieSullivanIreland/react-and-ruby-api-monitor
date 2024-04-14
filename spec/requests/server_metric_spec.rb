@@ -28,12 +28,17 @@ end
 RSpec.describe "GET Single Server Metric", type: :request do
   describe "GET /show" do
     before do
-      FactoryBot.build(:server_metric)
+      FactoryBot.create(:server_metric, id: 1, cpu_temp: 1, cpu_load: 1, disk_load: 1)
       get "/api/v1/server_metrics/show/1"
     end
 
-    it "returns 1 result" do
-      expect(json).to eq(1)
+    it "gets the first post" do
+      expect(response).to have_http_status(:success)
+      metric = JSON.parse(response.body)
+      expect(metric["id"]).to eq(1)
+      expect(metric["cpu_temp"]).to eq(1)
+      expect(metric["cpu_load"]).to eq(1)
+      expect(metric["disk_load"]).to eq(1)
     end
 
     it "returns status code 200" do
