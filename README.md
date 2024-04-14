@@ -26,6 +26,7 @@ Things you may want to cover:
 use kaminari for pagination
 controlled comonents for form
 use state management
+come back to average endpoint testing
 
 Use tree shaking for Chart JS
 Write test cases
