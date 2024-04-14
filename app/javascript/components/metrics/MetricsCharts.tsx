@@ -11,7 +11,11 @@ import {
 import { fetchData } from '../../common/api';
 import { IAverageMetric } from '../../common/types';
 
-const MetricsCharts = () => {
+interface IProps {
+  onCreateMetricClick: () => void;
+}
+
+const MetricsCharts = ({ onCreateMetricClick }: IProps) => {
   const [activeFilter, setActiveFilter] = useState(METRICS_FILTERS.ONE_HOUR);
   const [averageMetric, setAverageMetric] = useState({
     labels: [],
@@ -73,18 +77,6 @@ const MetricsCharts = () => {
     }
   };
 
-  const handleAddNewClick = (e: Event) => {
-    const myModal = document.getElementById('exampleModal');
-    // const myInput = document.getElementById('myInput');
-    console.log('myModal');
-    console.log(myModal);
-    if (myModal) {
-      myModal.addEventListener('shown.bs.modal', () => {
-        console.log('SHOW');
-      });
-    }
-  };
-
   return (
     <div>
       <div className='metrics__buttons'>
@@ -96,18 +88,10 @@ const MetricsCharts = () => {
           onClick={handleOnClick}
           activeBtnLabel={activeFilter}
         />
-        {/* <Button
+        <Button
           label='Add New'
-          onClick={handleAddNewClick}
-        /> */}
-        <button
-          type='button'
-          className='btn btn-primary'
-          data-bs-target='#exampleModal'
-          onClick={handleAddNewClick}
-        >
-          Launch demo modal
-        </button>
+          onClick={onCreateMetricClick}
+        />
       </div>
       <div className='metrics__container mt-5'>
         <div>

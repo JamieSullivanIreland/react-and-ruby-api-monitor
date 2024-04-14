@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
+import Button from '../button/Button';
 
-const Modal = () => {
+interface IProps {
+  show: boolean;
+  header?: string;
+  onSubmit: (e: Event) => void;
+  onClose: () => void;
+}
+
+const Modal = ({
+  children,
+  show,
+  header,
+  onSubmit,
+  onClose,
+}: React.FC<IProps>) => {
   return (
     <div
-      //   className='modal show'
-      //   style={{ display: 'block' }}
-      className='modal fade'
+      className={`modal ${show ? 'show' : 'fade'}`}
+      style={{ display: show ? 'block' : 'none' }}
       id='exampleModal'
       tabIndex='-1'
       aria-labelledby='exampleModalLabel'
@@ -17,31 +30,26 @@ const Modal = () => {
               className='modal-title fs-5'
               id='exampleModalLabel'
             >
-              Modal title
+              {header}
             </h1>
-            <button
-              type='button'
-              className='btn-close'
-              data-bs-dismiss='modal'
-              aria-label='Close'
-            ></button>
+            <Button
+              classes='btn-close'
+              onClick={onClose}
+            />
           </div>
-          <div className='modal-body'>...</div>
-          <div className='modal-footer'>
-            <button
-              type='button'
-              className='btn btn-secondary'
-              data-bs-dismiss='modal'
-            >
-              Close
-            </button>
-            <button
-              type='button'
-              className='btn btn-primary'
-            >
-              Save changes
-            </button>
-          </div>
+          <div className='modal-body'>{children}</div>
+          {/* <div className='modal-footer'>
+            <Button
+              label='Cancel'
+              onClick={onClose}
+              classes='btn btn-light'
+            />
+            <Button
+              type='submit'
+              label='Submit'
+              onClick={onSubmit}
+            />
+          </div> */}
         </div>
       </div>
     </div>

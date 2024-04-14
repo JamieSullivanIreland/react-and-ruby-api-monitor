@@ -1,9 +1,15 @@
 import React from 'react';
 
-const Form = () => {
+interface IProps {
+  id: string;
+  onSubmit: (e: Event) => void;
+}
+
+const Form = ({ children, onSubmit }: React.FC<IProps>) => {
   return (
-    <form>
-      <div className='mb-3'>
+    <form onSubmit={onSubmit}>
+      {children}
+      {/* <div className='mb-3'>
         <label
           htmlFor='exampleInputEmail1'
           className='form-label'
@@ -48,13 +54,7 @@ const Form = () => {
         >
           Check me out
         </label>
-      </div>
-      <button
-        type='submit'
-        className='btn btn-primary'
-      >
-        Submit
-      </button>
+      </div> */}
     </form>
   );
 };

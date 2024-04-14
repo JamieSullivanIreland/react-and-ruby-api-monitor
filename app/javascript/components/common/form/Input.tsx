@@ -1,12 +1,36 @@
 import React from 'react';
 
-const Input = () => {
+interface IProps {
+  id?: string;
+  label?: string;
+  type: string;
+  inputClasses?: string;
+  labelClasses?: string;
+}
+
+const Input = ({
+  id,
+  label,
+  type,
+  inputClasses = 'form-control mb-4',
+  labelClasses = 'form-label',
+}: IProps) => {
   return (
-    <input
-      type='checkbox'
-      className='form-check-input'
-      id='exampleCheck1'
-    />
+    <>
+      {label && (
+        <label
+          htmlFor={id}
+          className={labelClasses}
+        >
+          {label}
+        </label>
+      )}
+      <input
+        type={type}
+        className={inputClasses}
+        id={id}
+      />
+    </>
   );
 };
 
