@@ -8,15 +8,23 @@ import type {
   ITableCell,
   ITableRow,
 } from '../../../common/types';
+import Spinner from '../spinner/Spinner';
 
 interface IProps {
   headerCells: ITableCell[];
   rows: ITableRow[];
+  isLoading: boolean;
   paginationParams?: IPaginationParams;
   onSort?: (key: string) => void;
 }
 
-const Table = ({ headerCells, rows, paginationParams, onSort }: IProps) => {
+const Table = ({
+  headerCells,
+  rows,
+  isLoading,
+  paginationParams,
+  onSort,
+}: IProps) => {
   return (
     <div className='border rounded'>
       <table className='table table-striped table-border-radius'>
@@ -27,13 +35,17 @@ const Table = ({ headerCells, rows, paginationParams, onSort }: IProps) => {
             onSort={onSort}
           />
         </thead>
-        <tbody>
-          {rows.map((row: ITableRow) => (
-            <Fragment key={nanoid()}>
-              <TableRow cells={row.cells} />
-            </Fragment>
-          ))}
-        </tbody>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <tbody>
+            {rows.map((row: ITableRow) => (
+              <Fragment key={nanoid()}>
+                <TableRow cells={row.cells} />
+              </Fragment>
+            ))}
+          </tbody>
+        )}
       </table>
     </div>
   );
