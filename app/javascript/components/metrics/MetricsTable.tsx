@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 
 import { ORDER_BY, METRICS_URL, METRICS_KEYS } from '../../common/constants';
 import Table from '../common/table/Table';
@@ -20,7 +21,7 @@ const MetricsTable = () => {
   const dropdownLabels = ['Show 10', 'Show 25', 'Show 50'];
   const [tableRows, setTableRows] = useState<ITableRow[]>([]);
   const [totalPages, setTotalPages] = useState<number[]>([1]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [paginationParams, setPaginationParams] = useState<IPaginationParams>({
     page: 1,
     limit: 10,
@@ -32,11 +33,19 @@ const MetricsTable = () => {
     Object.entries(metric).map((data: Array<any>) => {
       switch (data[0]) {
         case CPU_TEMP:
+          return {
+            classes: 'text-center',
+            label: `${parseFloat(data[1]).toFixed(1)} ${String.fromCharCode(176)}C`,
+          };
         case CPU_LOAD:
         case DISK_LOAD:
           return {
             classes: 'text-center',
-            label: data[1],
+            label: `${parseFloat(data[1]).toFixed(1)}%`,
+          };
+        case CREATED_AT:
+          return {
+            label: moment(data[1]).format('lll'),
           };
         default:
           return {
