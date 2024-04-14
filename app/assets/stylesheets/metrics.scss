@@ -3,19 +3,48 @@
 .metrics {
   &__buttons {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column-reverse;
+
+    button {
+      margin-bottom: 1.5rem;
+    }
+
+    @media screen and (min-width: 350px) {
+      justify-content: space-between;
+      flex-direction: row;
+
+      button {
+        margin-bottom: 0;
+      }
+    }
   }
 
   &__container {
     display: flex;
-    justify-content: space-between;
     flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (min-width: 1200px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
 }
 
 .line-chart {
-  max-width: 25rem;
+  width: 100%;
+  max-width: 45rem;
+  margin-bottom: 2rem;
+
+  @media screen and (min-width: 1200px) {
+    max-width: 20rem;
+    margin-bottom: 0;
+  }
 }
 
 .pagination {
