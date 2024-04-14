@@ -24,8 +24,8 @@ const ButtonGroup = ({ label, activeBtnLabel, btnLabels, onClick }: IProps) => {
             onClick={onClick}
             classes={`
               btn 
-              border-secondary 
-              ${activeBtnLabel === label ? 'btn-secondary text-light' : 'btn-light'}
+              border-secondary-subtle
+              ${activeBtnLabel === label ? 'btn-primary text-light' : 'btn-white'}
             `}
           />
         </Fragment>

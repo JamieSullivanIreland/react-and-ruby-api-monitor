@@ -94,27 +94,21 @@ const MetricsCharts = ({ onCreateMetricClick }: IProps) => {
         />
       </div>
       <div className='metrics__container mt-5'>
-        <div>
-          <LineChart
-            header='CPU Temp'
-            labels={averageMetric.labels}
-            data={averageMetric.cpuTemps}
-          />
-        </div>
-        <div>
-          <LineChart
-            header='CPU Load'
-            labels={averageMetric.labels}
-            data={averageMetric.cpuLoads}
-          />
-        </div>
-        <div>
-          <LineChart
-            header='Disk Load'
-            labels={averageMetric.labels}
-            data={averageMetric.diskLoads}
-          />
-        </div>
+        <LineChart
+          header='CPU Temp'
+          labels={averageMetric.labels}
+          data={averageMetric.cpuTemps}
+        />
+        <LineChart
+          header='CPU Load'
+          labels={averageMetric.labels}
+          data={averageMetric.cpuLoads}
+        />
+        <LineChart
+          header='Disk Load'
+          labels={averageMetric.labels}
+          data={averageMetric.diskLoads}
+        />
       </div>
     </div>
   );
