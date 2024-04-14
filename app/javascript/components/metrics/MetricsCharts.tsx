@@ -11,7 +11,11 @@ import {
 import { fetchData } from '../../common/api';
 import { IAverageMetric } from '../../common/types';
 
-const MetricsCharts = () => {
+interface IProps {
+  onCreateMetricClick: () => void;
+}
+
+const MetricsCharts = ({ onCreateMetricClick }: IProps) => {
   const [activeFilter, setActiveFilter] = useState(METRICS_FILTERS.ONE_HOUR);
   const [averageMetric, setAverageMetric] = useState({
     labels: [],
@@ -73,10 +77,6 @@ const MetricsCharts = () => {
     }
   };
 
-  const handleAddNewClick = (e: Event) => {
-    console.log('Add NEw');
-  };
-
   return (
     <div>
       <div className='metrics__buttons'>
@@ -90,7 +90,7 @@ const MetricsCharts = () => {
         />
         <Button
           label='Add New'
-          onClick={handleAddNewClick}
+          onClick={onCreateMetricClick}
         />
       </div>
       <div className='metrics__container mt-5'>

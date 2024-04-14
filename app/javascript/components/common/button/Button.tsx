@@ -1,15 +1,21 @@
 import React from 'react';
 
 interface IProps {
-  label: string;
+  type?: string;
+  label?: string;
   onClick: (e: Event) => void;
   classes?: string;
 }
 
-const Button = ({ label, onClick, classes = 'btn btn-primary' }: IProps) => {
+const Button = ({
+  type = 'button',
+  label,
+  onClick,
+  classes = 'btn btn-primary',
+}: IProps) => {
   return (
     <button
-      type='button'
+      type={type}
       className={classes}
       onClick={onClick}
     >
