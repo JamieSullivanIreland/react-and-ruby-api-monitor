@@ -100,10 +100,15 @@ class Api::V1::ServerMetricsController < ApplicationController
       required(:disk_load).filled(type?: Float, lteq?: 100)
     end
 
-    validation = schema.call(server_metric_params.to_h)
+    parsed_params = server_metric_params
+    parsed_params.each do |key, value|
+      parsed_params[key] = parsed_params[key].to_f
+    end
+
+    validation = schema.call(parsed_params.to_h)
 
     if validation.success?
-      server_metric = ServerMetric.create!(server_metric_params.to_h)
+      server_metric = ServerMetric.create!(parsed_params.to_h)
       if server_metric
         render json: server_metric, status: :created
       end

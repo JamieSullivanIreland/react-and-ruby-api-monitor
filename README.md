@@ -24,6 +24,7 @@ Things you may want to cover:
 - ...
 
 use kaminari for pagination
+controlled comonents for form
 
 Use tree shaking for Chart JS
 Write test cases

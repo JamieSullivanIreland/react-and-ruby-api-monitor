@@ -1,19 +1,20 @@
 import React, { type ReactNode } from 'react';
+
 import Button from '../button/Button';
 
 interface IProps {
   show: boolean;
   header?: string;
-  onSubmit: (e: Event) => void;
   onClose: () => void;
+  footer?: ReactNode;
 }
 
 const Modal = ({
   children,
   show,
   header,
-  onSubmit,
   onClose,
+  footer,
 }: React.FC<IProps>) => {
   return (
     <div
@@ -38,18 +39,7 @@ const Modal = ({
             />
           </div>
           <div className='modal-body'>{children}</div>
-          {/* <div className='modal-footer'>
-            <Button
-              label='Cancel'
-              onClick={onClose}
-              classes='btn btn-light'
-            />
-            <Button
-              type='submit'
-              label='Submit'
-              onClick={onSubmit}
-            />
-          </div> */}
+          {footer && <div className='modal-footer'>{footer}</div>}
         </div>
       </div>
     </div>

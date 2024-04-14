@@ -17,10 +17,10 @@ export interface ITableData {
 }
 
 export interface IServerMetric {
-  id: string;
-  cpuTemp: number;
-  cpuLoad: number;
-  diskLoad: number;
+  id?: string;
+  cpu_temp: number;
+  cpu_load: number;
+  disk_load: number;
 }
 
 export interface IAverageMetric {
@@ -28,6 +28,12 @@ export interface IAverageMetric {
   cpu_temp_avg: number;
   cpu_load_avg: number;
   disk_load_avg: number;
+}
+
+export interface IMetricFormErrors {
+  cpu_temp: string;
+  cpu_load: string;
+  disk_load: string;
 }
 
 export interface IPaginatedMetrics {
