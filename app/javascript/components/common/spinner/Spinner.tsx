@@ -2,12 +2,10 @@ import React from 'react';
 
 const Spinner = () => {
   return (
-    <div className='spinner__container'>
-      <div
-        className='spinner-border'
-        role='status'
-      />
-    </div>
+    <div
+      className='spinner-border'
+      role='status'
+    />
   );
 };
 

@@ -27,7 +27,7 @@ const Table = ({
 }: IProps) => {
   return (
     <div className='border rounded'>
-      <table className='table table-striped table-border-radius'>
+      <table className='table table__border'>
         <thead>
           <TableRow
             cells={headerCells}
@@ -36,14 +36,26 @@ const Table = ({
           />
         </thead>
         {isLoading ? (
-          <Spinner />
+          <tbody>
+            <tr className='table__spinner'>
+              <td>
+                <Spinner />
+              </td>
+            </tr>
+          </tbody>
         ) : (
           <tbody>
-            {rows.map((row: ITableRow) => (
-              <Fragment key={nanoid()}>
-                <TableRow cells={row.cells} />
-              </Fragment>
-            ))}
+            {rows.length > 0 ? (
+              rows.map((row: ITableRow) => (
+                <Fragment key={nanoid()}>
+                  <TableRow cells={row.cells} />
+                </Fragment>
+              ))
+            ) : (
+              <tr className='table__empty'>
+                <td className='text-dark'>No data to show</td>
+              </tr>
+            )}
           </tbody>
         )}
       </table>
