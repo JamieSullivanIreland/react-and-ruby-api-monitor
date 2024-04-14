@@ -25,6 +25,7 @@ Things you may want to cover:
 
 use kaminari for pagination
 controlled comonents for form
+use state management
 
 Use tree shaking for Chart JS
 Write test cases
