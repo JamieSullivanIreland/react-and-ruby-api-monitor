@@ -35,6 +35,9 @@ gem "kaminari"
 #  Schema
 gem "dry-schema", "~> 1.13", ">= 1.13.3"
 
+# Scheduler
+gem "rufus-scheduler"
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
