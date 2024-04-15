@@ -104,7 +104,7 @@ RSpec.describe "GET Average Per Multiple Hours Server Metrics", type: :request d
     end
 
     it "returns 3 results" do
-      expect(json.size).to eq(3)
+      expect(json.size).to eq(6)
     end
 
     it "returns status code 200" do

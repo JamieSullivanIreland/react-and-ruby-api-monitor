@@ -63,7 +63,7 @@ class Api::V1::ServerMetricsController < ApplicationController
         label = end_time.strftime("%H:%M")
       else
         end_time = count == 1 ? now : start_time.hours.ago
-        start_time = count * 4
+        start_time = count * 2
         server_metric = ServerMetric.where(:created_at => start_time.hours.ago..end_time)
         label = end_time.strftime("%H:%M")
       end
