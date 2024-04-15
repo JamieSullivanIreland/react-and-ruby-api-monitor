@@ -1,8 +1,18 @@
 require "date"
 require "dry-schema"
+require "rufus-scheduler"
 
 class Api::V1::ServerMetricsController < ApplicationController
+  scheduler = Rufus::Scheduler.new
   before_action :set_server_metric, only: %i[show destroy]
+
+  scheduler.every "2m" do
+    ServerMetric.create(
+      cpu_temp: Random.rand(200),
+      cpu_load: Random.rand(100),
+      disk_load: Random.rand(100),
+    )
+  end
 
   def index
     schema = Dry::Schema.Params do
