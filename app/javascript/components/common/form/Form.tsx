@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface IProps {
-  id: string;
   onSubmit: (e: Event) => void;
 }
 
