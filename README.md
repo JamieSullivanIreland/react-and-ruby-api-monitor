@@ -1,4 +1,4 @@
-# README for Ruby on Rails 7 App with React
+# README for React and Ruby Server Monitor
 
 Server Metrics was built with Ruby on Rails 7 application and React. This README will guide you through setting up the project.
 
