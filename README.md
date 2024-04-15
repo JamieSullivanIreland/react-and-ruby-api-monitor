@@ -69,6 +69,8 @@ I decided against using a state management library such as Redux or Zustand due 
 
 I used controlled components to manage state in the create new metric form. I felt this approach was sufficient enough to handle a small form with only 3 inputs. However, for large forms or complex data structures, controlled components might introduce performance overhead and I would consider using an external library such as React Hook Form.
 
+## Trade Offs
+
 ### Trade-off: Time constraints vs. custom styling:
 
 Chose Bootstrap for styling due to time constraints. Bootstrap offered quicker development and a consistent UI, Custom styling requires more time and effort and is more suitable to larger scale applications with unique branding.
