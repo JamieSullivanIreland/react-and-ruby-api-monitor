@@ -85,6 +85,10 @@ Building an API layer added an additional abstraction between the frontend and b
 
 I chose to post random metric data every 2 minutes and allow the user to create a new metric on the client side. Given more time I would have liked to interact with a real server and gather its metrics.
 
+### Trade-off: Adding unit tests at the end of development process
+
+While building an API, my typical approach involves starting with TDD, incorporating unit tests from the start. However, due to the learning curve associated with Rails and the packages utilised, I prioritised the initial construction of the application. As a result, unit testing was deferred until the latter stages of development.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
